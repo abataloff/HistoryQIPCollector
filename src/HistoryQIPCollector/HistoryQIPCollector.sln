@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HistoryQIPCollector", "HistoryQIPCollector\HistoryQIPCollector.csproj", "{E373C961-EB06-4620-B11D-4E75F1C0532E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HistoryQIPCollector_TestProject", "HistoryQIPCollector_TestProject\HistoryQIPCollector_TestProject.csproj", "{602FC769-8B3D-44CA-9C18-DB3591D94D78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC18E7ED-8B71-449A-B0BD-C233FDE68F9F}"
+	ProjectSection(SolutionItems) = preProject
+		HistoryQIPCollector.vsmdi = HistoryQIPCollector.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = HistoryQIPCollector.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E373C961-EB06-4620-B11D-4E75F1C0532E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E373C961-EB06-4620-B11D-4E75F1C0532E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E373C961-EB06-4620-B11D-4E75F1C0532E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E373C961-EB06-4620-B11D-4E75F1C0532E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{602FC769-8B3D-44CA-9C18-DB3591D94D78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{602FC769-8B3D-44CA-9C18-DB3591D94D78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{602FC769-8B3D-44CA-9C18-DB3591D94D78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{602FC769-8B3D-44CA-9C18-DB3591D94D78}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
