@@ -8,27 +8,30 @@ namespace HistoryQIPCollector
     internal class HistoryFolder
     {
         public const string HISTORY_FOLDER_NAME = "History";
+        private static readonly List<string> ignoredFiles = new List<string>() {"_botlog.txt", "_srvlog.txt"};
 
         public int OwnerIcqNumber { get; set; }
-        public HistoryFile[] Files { get; set; }
+        public Dictionary<int, HistoryFile>  Files { get; set; }
 
         public static HistoryFolder Read(string a_userFolder)
         {
-            var _userFolderName = (new DirectoryInfo (a_userFolder)).Name;
+            var _userFolderName = (new DirectoryInfo(a_userFolder)).Name;
             int _ownerIcqNumber;
 
             if (!int.TryParse(_userFolderName, out _ownerIcqNumber))
                 throw new Exception(string.Format("Имя папки должно быть числовым. Имя файла:{0}", _userFolderName));
 
-            var _historyFolder = Path.Combine(a_userFolder,HISTORY_FOLDER_NAME);
+            var _historyFolder = Path.Combine(a_userFolder, HISTORY_FOLDER_NAME);
 
             if (!Directory.Exists(_historyFolder))
                 throw new DirectoryNotFoundException(string.Format("Не найдена директория {0}", _historyFolder));
-
+            
             return new HistoryFolder
                 {
                     OwnerIcqNumber = _ownerIcqNumber,
-                    Files = Directory.GetFiles(_historyFolder, "*", SearchOption.TopDirectoryOnly).Select(HistoryFile.Read).ToArray(),
+                    Files = (from _fileName in Directory.GetFiles(_historyFolder, "*.txt", SearchOption.TopDirectoryOnly)
+                             where !ignoredFiles.Contains(_fileName)
+                             select HistoryFile.Read(_fileName)).ToDictionary(a_historyFile => a_historyFile.InterlocutorIcqNumber),
                 };
         }
     }

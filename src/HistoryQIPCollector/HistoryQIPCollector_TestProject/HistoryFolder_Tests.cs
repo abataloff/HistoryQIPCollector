@@ -86,9 +86,9 @@ namespace HistoryQIPCollector_TestProject
         {
             var _result = HistoryFolder.Read(userDirectory);
             Assert.AreEqual(230989500, _result.OwnerIcqNumber);
-            Assert.AreEqual(3, _result.Files.Length);
+            Assert.AreEqual(3, _result.Files.Count);
 
-            var _file0 = _result.Files[0];
+            var _file0 = _result.Files[12341765];
             Assert.AreEqual(12341765, _file0.InterlocutorIcqNumber);
             Assert.AreEqual(4, _file0.Records.Count);
             Assert.AreEqual(new HistoryRecord
@@ -119,8 +119,8 @@ namespace HistoryQIPCollector_TestProject
                 Direction = MessageDirection.Incoming,
                 Nik = "Женя Тарасов"
             }, _file0.Records[3]);
-            
-            var _file1 = _result.Files[1];
+
+            var _file1 = _result.Files[12348765];
             Assert.AreEqual(12348765, _file1.InterlocutorIcqNumber);
             Assert.AreEqual(4, _file1.Records.Count);
             Assert.AreEqual(new HistoryRecord
@@ -151,8 +151,8 @@ namespace HistoryQIPCollector_TestProject
                 Direction = MessageDirection.Incoming,
                 Nik = "Женя Тарасов"
             }, _file1.Records[3]);
-           
-            var _file2 = _result.Files[2];
+
+            var _file2 = _result.Files[2933684];
             Assert.AreEqual(2933684, _file2.InterlocutorIcqNumber);
             Assert.AreEqual(4, _file2.Records.Count);
             Assert.AreEqual(new HistoryRecord
