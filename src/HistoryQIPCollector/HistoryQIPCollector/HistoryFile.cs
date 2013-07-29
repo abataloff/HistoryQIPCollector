@@ -10,6 +10,8 @@ namespace HistoryQIPCollector
 {
     internal class HistoryFile
     {
+        public const string FILE_EXTENTION = ".txt";
+
         public int InterlocutorIcqNumber { get; set; }
 
         private static readonly Logger log = LogManager.GetCurrentClassLogger();

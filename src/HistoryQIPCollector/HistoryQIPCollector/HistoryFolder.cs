@@ -25,11 +25,11 @@ namespace HistoryQIPCollector
 
             if (!Directory.Exists(_historyFolder))
                 throw new DirectoryNotFoundException(string.Format("Не найдена директория {0}", _historyFolder));
-            
+
             return new HistoryFolder
                 {
                     OwnerIcqNumber = _ownerIcqNumber,
-                    Files = (from _fileName in Directory.GetFiles(_historyFolder, "*.txt", SearchOption.TopDirectoryOnly)
+                    Files = (from _fileName in Directory.GetFiles(_historyFolder, "*" + HistoryFile.FILE_EXTENTION, SearchOption.TopDirectoryOnly)
                              where !ignoredFiles.Contains(_fileName)
                              select HistoryFile.Read(_fileName)).ToDictionary(a_historyFile => a_historyFile.InterlocutorIcqNumber),
                 };
