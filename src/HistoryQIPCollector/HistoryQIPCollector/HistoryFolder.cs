@@ -34,5 +34,10 @@ namespace HistoryQIPCollector
                              select HistoryFile.Read(_fileName)).ToDictionary(a_historyFile => a_historyFile.InterlocutorIcqNumber),
                 };
         }
+
+        internal void Write(string _resultDir)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

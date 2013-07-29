@@ -59,6 +59,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HistoryRecord.cs" />
+    <Compile Include="QipHistoryCollector.cs" />
+    <Compile Include="QipHistoryCollectorSettings.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
