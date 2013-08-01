@@ -89,5 +89,124 @@ namespace HistoryQIPCollector_TestProject
             var _actual = HistoryRecord.Parse(_TEXT);
             Assert.AreEqual(_expected, _actual);
         }
+
+        [TestMethod]
+        public void ToStringTest()
+        {
+            const string _EXPECTED = "-------------------------------------->-\r\n" +
+                        "S_H_U_R_I_K (10:28:03 22/04/2010)\r\n" +
+                        "ок)спс)Сдал)А кто ещё с тобой сдает?";
+
+            var _actual = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                Direction = MessageDirection.Outgoing,
+                Nik = "S_H_U_R_I_K"
+            }.ToString();
+            Assert.AreEqual(_EXPECTED, _actual);
+        }
+
+        [TestMethod]
+        public void EqualsTest()
+        {
+            HistoryRecord _first;
+            HistoryRecord _second;
+
+            #region // Должно вернуть true, если они реально равны
+            _first = new HistoryRecord
+                {
+                    Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                    Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                    Direction = MessageDirection.Outgoing,
+                    Nik = "S_H_U_R_I_K"
+                };
+
+            _second = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                Direction = MessageDirection.Outgoing,
+                Nik = "S_H_U_R_I_K"
+            };
+            Assert.IsTrue(_first.Equals(_second));
+            #endregion
+
+            #region // Должно вернуть false, если не равны даты
+            _first = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 01),
+                Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                Direction = MessageDirection.Outgoing,
+                Nik = "S_H_U_R_I_K"
+            };
+
+            _second = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                Direction = MessageDirection.Outgoing,
+                Nik = "S_H_U_R_I_K"
+            };
+            Assert.IsFalse(_first.Equals(_second));
+            #endregion
+
+            #region // Должно вернуть false, если не равны сообщения
+            _first = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                Direction = MessageDirection.Outgoing,
+                Nik = "S_H_U_R_I_K"
+            };
+
+            _second = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Message = "ок)спс)Сдал)?",
+                Direction = MessageDirection.Outgoing,
+                Nik = "S_H_U_R_I_K"
+            };
+            Assert.IsFalse(_first.Equals(_second));
+            #endregion
+
+            #region // Должно вернуть false, если не равны направлености
+            _first = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                Direction = MessageDirection.Outgoing,
+                Nik = "S_H_U_R_I_K"
+            };
+
+            _second = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                Direction = MessageDirection.Incoming,
+                Nik = "S_H_U_R_I_K"
+            };
+            Assert.IsFalse(_first.Equals(_second));
+            #endregion
+
+            #region // Должно вернуть false, если не равны ники
+            _first = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                Direction = MessageDirection.Outgoing,
+                Nik = "S_H_U_R_I_K"
+            };
+
+            _second = new HistoryRecord
+            {
+                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
+                Direction = MessageDirection.Outgoing,
+                Nik = "S_"
+            };
+            Assert.IsFalse(_first.Equals(_second));
+            #endregion
+        }
     }
 }
