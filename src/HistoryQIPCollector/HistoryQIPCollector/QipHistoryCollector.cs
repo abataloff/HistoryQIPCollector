@@ -69,7 +69,6 @@ namespace HistoryQIPCollector
                 var _result = new List<HistoryRecord>();
                 // Предыдущая запись
                 var _prev = _records[0];
-                _result.Add(_prev);
                 for (var _i = 1; _i < _records.Count; _i++)
                 {
                     var _curRecord = _records[_i];
@@ -81,9 +80,11 @@ namespace HistoryQIPCollector
                         log.Trace("Были обнаружены одномоментные записи с разным текстом. В файле {0} с датой {1}", a_file.InterlocutorIcqNumber,
                                   _curRecord.Date);
                     }
+                    _result.Add(_prev);
+                    _prev = _curRecord;
                 }
-                a_file.Records.Clear();
-                a_file.Records.AddRange(_result);
+                _records.Clear();
+                _records.AddRange(_result);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -8,7 +9,13 @@ namespace HistoryQIPCollector
     internal class HistoryFolder
     {
         public const string HISTORY_FOLDER_NAME = "History";
+
         private static readonly List<string> ignoredFiles = new List<string>() {"_botlog.txt", "_srvlog.txt"};
+
+        public HistoryFolder()
+        {
+            Files = new Dictionary<int, HistoryFile>();
+        }
 
         public int OwnerIcqNumber { get; set; }
         public Dictionary<int, HistoryFile>  Files { get; set; }
@@ -35,9 +42,22 @@ namespace HistoryQIPCollector
                 };
         }
 
-        internal void Write(string _resultDir)
+        public void Write(string a_path)
         {
-            throw new NotImplementedException();
+            var _di = new DirectoryInfo(a_path);
+            if (!_di.Exists)
+                _di.Create();
+
+            var _userProfilePath = Path.Combine(_di.FullName, OwnerIcqNumber.ToString(CultureInfo.InvariantCulture));
+            Directory.CreateDirectory(_userProfilePath);
+
+            var _historyPath = Path.Combine(_userProfilePath, HISTORY_FOLDER_NAME);
+            Directory.CreateDirectory(_historyPath);
+
+            foreach (var _file in Files.Values)
+            {
+                _file.Write(_historyPath);
+            }
         }
     }
 }

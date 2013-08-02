@@ -77,6 +77,7 @@ namespace HistoryQIPCollector
                 var _result = _collector.Collect(_sources);
                 _result.Write(_resultDir);
             }
+            MessageBox.Show("Готово!");
         }
     }
 }

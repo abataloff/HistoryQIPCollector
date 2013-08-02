@@ -63,6 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Comparator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HistoryQIPCollector\HistoryQIPCollector.csproj">
@@ -86,6 +87,7 @@
   <ItemGroup>
     <None Include="Resources\12341765.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
