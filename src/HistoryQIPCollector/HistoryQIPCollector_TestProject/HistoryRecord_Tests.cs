@@ -94,12 +94,12 @@ namespace HistoryQIPCollector_TestProject
         public void ToStringTest()
         {
             const string _EXPECTED = "-------------------------------------->-\r\n" +
-                        "S_H_U_R_I_K (10:28:03 22/04/2010)\r\n" +
+                        "S_H_U_R_I_K (10:28:03 9/04/2010)\r\n" +
                         "ок)спс)Сдал)А кто ещё с тобой сдает?";
 
             var _actual = new HistoryRecord
             {
-                Date = new DateTime(2010, 04, 22, 10, 28, 03),
+                Date = new DateTime(2010, 4, 9, 10, 28, 03),
                 Message = "ок)спс)Сдал)А кто ещё с тобой сдает?",
                 Direction = MessageDirection.Outgoing,
                 Nik = "S_H_U_R_I_K"

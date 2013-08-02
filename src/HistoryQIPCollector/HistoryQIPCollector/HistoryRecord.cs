@@ -96,7 +96,7 @@ namespace HistoryQIPCollector
             }
             _sb.AppendLine(_directionString);
             //Nik (12:26:26 19/03/2013)
-            var _dateText = Date.ToString("HH:mm:ss dd/MM/yyyy");
+            var _dateText = Date.ToString("HH:mm:ss d/MM/yyyy");
             // Заменяем точки так как форматирование не даст косых
             _dateText = _dateText.Replace('.', '/');
             _sb.AppendLine(string.Format("{0} ({1})", Nik, _dateText));
