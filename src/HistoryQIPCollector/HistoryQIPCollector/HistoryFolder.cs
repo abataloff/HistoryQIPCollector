@@ -59,5 +59,14 @@ namespace HistoryQIPCollector
                 _file.Write(_historyPath);
             }
         }
+
+        public override bool Equals(object a_obj)
+        {
+            var _val = a_obj as HistoryFolder;
+            if (a_obj == null)
+                return false;
+            return OwnerIcqNumber.Equals(_val.OwnerIcqNumber) &&
+                   Files.SequenceEqual(_val.Files);
+        }
     }
 }

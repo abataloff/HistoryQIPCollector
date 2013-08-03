@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Linq;
 using NLog;
 
 namespace HistoryQIPCollector
@@ -119,6 +120,15 @@ namespace HistoryQIPCollector
                     _tw.WriteLine();
             }
             _tw.Close();
+        }
+
+        public override bool Equals(object a_obj)
+        {
+            var _val = a_obj as HistoryFile;
+            if (_val == null)
+                return false;
+            return InterlocutorIcqNumber.Equals(_val.InterlocutorIcqNumber) &&
+                   Records.SequenceEqual(_val.Records);
         }
     }
 }
