@@ -299,7 +299,7 @@ namespace HistoryQIPCollector_TestProject
                                                 {
                                                     Date = new DateTime(2001, 1, 12, 2, 15, 00),
                                                     Direction = MessageDirection.Outgoing,
-                                                    Message = "Folder 1 File 2 Record 2\nFolder 1 File 2 Record 2_new",
+                                                    Message = "Folder 1 File 2 Record 2_new\nFolder 1 File 2 Record 2",
                                                     Nik = "Nik 2"
                                                 },
                                                 new HistoryRecord
@@ -324,21 +324,21 @@ namespace HistoryQIPCollector_TestProject
                                                 {
                                                     Date = new DateTime(2001, 11, 12, 2, 12, 00),
                                                     Direction = MessageDirection.Incoming,
-                                                    Message = "Folder 3 File 2 Record 1",
+                                                    Message = "Folder 3 File 3 Record 1",
                                                     Nik = "Nik 4"
                                                 },
                                                 new HistoryRecord
                                                 {
                                                     Date = new DateTime(2001, 11, 12, 2, 15, 00),
                                                     Direction = MessageDirection.Outgoing,
-                                                    Message = "Folder 3 File 2 Record 2",
+                                                    Message = "Folder 3 File 3 Record 2",
                                                     Nik = "Nik 2"
                                                 },
                                                 new HistoryRecord
                                                 {
                                                     Date = new DateTime(2001, 11, 12, 2, 50, 00),
                                                     Direction = MessageDirection.Incoming,
-                                                    Message = "Folder 3 File 2 Record 3",
+                                                    Message = "Folder 3 File 3 Record 3",
                                                     Nik = "Nik 4"
                                                 },
                                         }
@@ -348,9 +348,8 @@ namespace HistoryQIPCollector_TestProject
 
             #endregion
 
-            var _target = new HistoryQIPCollector.QipHistoryCollector(new QipHistoryCollectorSettings());
+            var _target = new QipHistoryCollector(new QipHistoryCollectorSettings());
             var _actual = _target.Collect(new List<HistoryFolder> { _folder0, _folder1, _folder2 });
-            
             Assert.AreEqual(_expected, _actual);
         }
     }
