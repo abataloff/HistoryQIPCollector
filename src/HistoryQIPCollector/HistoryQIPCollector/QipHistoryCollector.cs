@@ -73,8 +73,8 @@ namespace HistoryQIPCollector
                 for (var _i = 1; _i < _records.Count; _i++)
                 {
                     var _curRecord = _records[_i];
-                    // Если даты записей одинаковые
-                    if (_prev.Date == _curRecord.Date)
+                    // Если даты записей, ники и направленость одинаковые 
+                    if (_prev.Date == _curRecord.Date && _prev.Direction == _curRecord.Direction && _prev.Nik == _curRecord.Nik)
                     {
                         // и при этом текст разный  (такое конечно не вероятно)
                         if (!_prev.Message.Equals(_curRecord.Message))
