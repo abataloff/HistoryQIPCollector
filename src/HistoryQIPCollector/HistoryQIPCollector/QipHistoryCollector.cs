@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NLog;
 
 namespace HistoryQIPCollector
@@ -36,80 +37,98 @@ namespace HistoryQIPCollector
             {
                 if (_hf.OwnerIcqNumber == _targetIcqNumber)
                 {
-                    addFilesToFolder(_hf.Files, _result);
+                    addFilesToFolder(_result, _hf.Files);
                 }
                 else log.Warn("История Icq - {0} не была добавлена",_hf.OwnerIcqNumber);
-            }
-
-            // Сортируем
-            foreach (var _file in _result.Files.Values)
-            {
-                _file.Records.Sort((a_x, a_y ) =>
-                    {
-                        if (a_x.Date != a_y.Date)
-                            return (a_x.Date > a_y.Date) ? 1 : -1;
-                        return 0;
-                    });
-            }
-
-            // Нормальизуем записи для каждого файла, т.е. удаляем дубликаты и объединяем одномоментные сообщения с разным текстом
-            foreach (var _file in _result.Files.Values)
-            {
-                normalize(_file);
             }
 
             return _result;
         }
 
-        private void normalize(HistoryFile a_file)
-        {
-            var _records = a_file.Records;
-            if (_records.Count > 0)
-            {
-                var _result = new List<HistoryRecord>();
-                // Предыдущая запись
-                var _prev = _records[0];
-                _result.Add(_prev);
-                for (var _i = 1; _i < _records.Count; _i++)
-                {
-                    var _curRecord = _records[_i];
-                    // Если даты записей, ники и направленость одинаковые 
-                    if (_prev.Date == _curRecord.Date && _prev.Direction == _curRecord.Direction && _prev.Nik == _curRecord.Nik)
-                    {
-                        // и при этом текст разный  (такое конечно не вероятно)
-                        if (!_prev.Message.Equals(_curRecord.Message))
-                        {
-                            // объединяем тексты
-                            _prev.Message += "\n" + _curRecord.Message;
-                            log.Trace("Были обнаружены одномоментные записи с разным текстом. В файле {0} с датой {1}", a_file.InterlocutorIcqNumber,
-                                      _curRecord.Date);
-                        }
-                    }
-                    else
-                    {
-                        // иначе добавляем запись
-                        _result.Add(_curRecord);
-                    }
-                    _prev = _curRecord;
-                }
-                _records.Clear();
-                _records.AddRange(_result);
-            }
-        }
-
-        private static void addFilesToFolder(Dictionary<int, HistoryFile> a_addFiles, HistoryFolder a_historyFolder)
+        private static void addFilesToFolder(HistoryFolder a_historyFolder, Dictionary<int, HistoryFile> a_addFiles)
         {
             foreach (var _file in a_addFiles.Keys)
             {
                 var _number = _file;
+                var _addFile = a_addFiles[_number];
+                // Если история с пользователем _number, есть
                 if (a_historyFolder.Files.ContainsKey(_number))
                 {
-                    a_historyFolder.Files[_number].Records.AddRange(a_addFiles[_number].Records);
+                    // добавляем к нейновые записи (при добавление учитывает хранологию и дублирующие сообщения)
+                    var _historyFile = a_historyFolder.Files[_number];
+                    //a_historyFolder.Files[_number].Records.AddRange(a_addFiles[_number].Records);
+                    addRecordsToFile(_historyFile, _addFile.Records);
                 }
                 else
                 {
-                    a_historyFolder.Files.Add(_number, a_addFiles[_number]);
+                    // иначе эо просто новая история, добавляем её
+                    a_historyFolder.Files.Add(_number, _addFile);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Добавляет записи в файл, при этом учитывает хронологию и дублирующие сообещния.
+        /// </summary>
+        /// <param name="a_historyFile">Файл в который будут добавляться записи. Записи в файле считаются нормализованными (нет дупликатов и сортированы по времени).</param>
+        /// <param name="a_addRecords">Добавляемые записи (должны быть нормализованные).</param>
+        private static void addRecordsToFile(HistoryFile a_historyFile, List<HistoryRecord> a_addRecords)
+        {
+            // ВАЖНО! Считаем что записи в файле и добавляемые записи уже нормализованы
+
+            // Если есть добавляемый записи
+            if (a_addRecords.Count > 0)
+            {
+                var _historyFileRecords = a_historyFile.Records;
+                // Если в файле уже есть записи и последняя запись в файле позже первой добавляемой
+                if (_historyFileRecords.Count > 0 && _historyFileRecords.Last().Date>= a_addRecords.First().Date)
+                {
+                    var _pos = 0;
+                    // поочередно добавляем записи
+                    foreach (var _addRecord in a_addRecords)
+                    {
+                        var _dateAddRecord = _addRecord.Date;
+                        // ищем место куда её вставить (по хронологии)
+                        _pos = _historyFileRecords.FindIndex(_pos, a_rec => a_rec.Date > _dateAddRecord);
+                        // Если позиция есть (>=0, т.е. добавляется не в конец)
+                        if (_pos >= 0)
+                        {
+                            if (_pos == 0)
+                            {
+                                _historyFileRecords.Insert(_pos, _addRecord);
+                            }
+                            else
+                            {
+                                // Если даты записей (вставляемой и до вставляймой в файле - [_pos]), ники и направленость одинаковые
+                                // делаем [_pos-1], т.к. _pos>1
+                                var _recordInFile = _historyFileRecords[_pos - 1];
+                                if (_recordInFile.Date == _addRecord.Date && _recordInFile.Direction == _addRecord.Direction &&
+                                    _recordInFile.Nik == _addRecord.Nik)
+                                {
+                                    // и при этом текст разный  (такое конечно не вероятно)
+                                    if (!_recordInFile.Message.Equals(_addRecord.Message))
+                                    {
+                                        // объединяем тексты
+                                        _recordInFile.Message += "\n" + _addRecord.Message;
+                                        log.Trace("Были обнаружены одномоментные записи с разным текстом. В файле {0} с датой {1}",
+                                                  a_historyFile.InterlocutorIcqNumber,
+                                                  _addRecord.Date);
+                                    }
+                                }
+                                else
+                                {
+                                    // иначе добавляем запись
+                                    _historyFileRecords.Insert(_pos, _addRecord);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            _historyFileRecords.Add(_addRecord);
+                        }
+                    }
+                }
+                else _historyFileRecords.AddRange(a_addRecords);
             }
         }
     }
