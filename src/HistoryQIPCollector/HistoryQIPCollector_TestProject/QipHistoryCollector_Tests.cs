@@ -54,6 +54,20 @@ namespace HistoryQIPCollector_TestProject
                                                     Message = "Folder 1 File 1 Record 3",
                                                     Nik = "Nik 1"
                                                 },
+                                             new HistoryRecord
+                                                {
+                                                    Date = new DateTime(2011, 12, 12, 2, 15, 00),
+                                                    Direction = MessageDirection.Outgoing,
+                                                    Message = "Folder 1 File 1 Record 4",
+                                                    Nik = "Nik 2"
+                                                },
+                                            new HistoryRecord
+                                                {
+                                                    Date = new DateTime(2011, 12, 12, 2, 15, 00),
+                                                    Direction = MessageDirection.Incoming,
+                                                    Message = "Folder 1 File 1 Record 5",
+                                                    Nik = "Nik 1"
+                                                },
                                         }
                             }
                     },
@@ -125,7 +139,7 @@ namespace HistoryQIPCollector_TestProject
             #region Папка2
 
             // Три файла файла
-            // Первый файл пользователя 1, одно сообщение общее, это третье из прошлой истории и два новых
+            // Первый файл пользователя 1, одно сообщение общее, это третье из прошлой истории и два новых, 4 -5 идентичны из первой истории
             // Второй файл пользователя 3, у ниго одно сообщение дублируется, и одно дописывается
             // Третий файл пользователя 4 - новый относительно других
             _folder2.OwnerIcqNumber = 2;
@@ -162,6 +176,20 @@ namespace HistoryQIPCollector_TestProject
                                                     Direction = MessageDirection.Outgoing,
                                                     Message = "Folder 1 File 1 Record 2",
                                                     Nik = "Nik 2"
+                                                },
+                                             new HistoryRecord
+                                                {
+                                                    Date = new DateTime(2011, 12, 12, 2, 15, 00),
+                                                    Direction = MessageDirection.Outgoing,
+                                                    Message = "Folder 1 File 1 Record 4",
+                                                    Nik = "Nik 2"
+                                                },
+                                            new HistoryRecord
+                                                {
+                                                    Date = new DateTime(2011, 12, 12, 2, 15, 00),
+                                                    Direction = MessageDirection.Incoming,
+                                                    Message = "Folder 1 File 1 Record 5",
+                                                    Nik = "Nik 1"
                                                 },
                                         }
                             }
@@ -280,6 +308,20 @@ namespace HistoryQIPCollector_TestProject
                                                     Date = new DateTime(2001, 12, 12, 2, 50, 00),
                                                     Direction = MessageDirection.Incoming,
                                                     Message = "Folder 1 File 1 Record 3",
+                                                    Nik = "Nik 1"
+                                                },
+                                             new HistoryRecord
+                                                {
+                                                    Date = new DateTime(2011, 12, 12, 2, 15, 00),
+                                                    Direction = MessageDirection.Outgoing,
+                                                    Message = "Folder 1 File 1 Record 4",
+                                                    Nik = "Nik 2"
+                                                },
+                                            new HistoryRecord
+                                                {
+                                                    Date = new DateTime(2011, 12, 12, 2, 15, 00),
+                                                    Direction = MessageDirection.Incoming,
+                                                    Message = "Folder 1 File 1 Record 5",
                                                     Nik = "Nik 1"
                                                 },
                                         }

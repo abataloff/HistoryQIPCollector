@@ -31,9 +31,12 @@ namespace HistoryQIPCollector
             var _targetIcqNumber = a_sources[0].OwnerIcqNumber;
             log.Trace("Целевой номер Icq - {0}", _targetIcqNumber);
             var _result = new HistoryFolder{OwnerIcqNumber = _targetIcqNumber};
-            
-            // Поочередно добавляем файлы, если Icq совпадает с целевым
-            foreach (var _hf in a_sources)
+            // Добавляем в результаты файлы первого источника
+            foreach (var _file in a_sources[0].Files.Values)
+                _result.Files.Add(_file.InterlocutorIcqNumber, _file);
+
+            // Поочередно (кроме первого источника) добавляем файлы, если Icq совпадает с целевым
+            foreach (var _hf in a_sources.GetRange(1,a_sources.Count-1))
             {
                 if (_hf.OwnerIcqNumber == _targetIcqNumber)
                 {
@@ -61,7 +64,7 @@ namespace HistoryQIPCollector
                 }
                 else
                 {
-                    // иначе эо просто новая история, добавляем её
+                    // иначе это просто новая история, добавляем её
                     a_historyFolder.Files.Add(_number, _addFile);
                 }
             }
@@ -99,14 +102,14 @@ namespace HistoryQIPCollector
                             }
                             else
                             {
-                                // Если даты записей (вставляемой и до вставляймой в файле - [_pos]), ники и направленость одинаковые
                                 // делаем [_pos-1], т.к. _pos>1
                                 var _recordInFile = _historyFileRecords[_pos - 1];
-                                if (_recordInFile.Date == _addRecord.Date && _recordInFile.Direction == _addRecord.Direction &&
-                                    _recordInFile.Nik == _addRecord.Nik)
+                                // Если нет таких сообщений (берем только до _pos, т.к. после точно нет)
+                                if(!_historyFileRecords.GetRange(0,_pos).Contains(_addRecord))
                                 {
-                                    // и при этом текст разный  (такое конечно не вероятно)
-                                    if (!_recordInFile.Message.Equals(_addRecord.Message))
+                                    // Если даты записей (вставляемой и до вставляймой в файле - [_pos]), ники и направленость одинаковые
+                                    if (_recordInFile.Date == _addRecord.Date && _recordInFile.Direction == _addRecord.Direction &&
+                                        _recordInFile.Nik == _addRecord.Nik)
                                     {
                                         // объединяем тексты
                                         _recordInFile.Message += "\n" + _addRecord.Message;
@@ -114,17 +117,19 @@ namespace HistoryQIPCollector
                                                   a_historyFile.InterlocutorIcqNumber,
                                                   _addRecord.Date);
                                     }
-                                }
-                                else
-                                {
-                                    // иначе добавляем запись
-                                    _historyFileRecords.Insert(_pos, _addRecord);
+                                    else
+                                    {
+                                        // иначе добавляем запись
+                                        _historyFileRecords.Insert(_pos, _addRecord);
+                                    }
                                 }
                             }
                         }
                         else
                         {
-                            _historyFileRecords.Add(_addRecord);
+                            if (!_historyFileRecords.Contains(_addRecord))
+                                _historyFileRecords.Add(_addRecord);
+                            _pos = 0;
                         }
                     }
                 }
