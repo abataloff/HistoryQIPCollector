@@ -199,7 +199,7 @@ namespace HistoryQIPCollector_TestProject
                                         {
                                             new HistoryRecord
                                                 {
-                                                    Date = new DateTime(2001, 11, 12, 2, 12, 00),
+                                                    Date = new DateTime(2001, 11, 12, 2, 15, 00),
                                                     Direction = MessageDirection.Incoming,
                                                     Message = "Folder 3 File 3 Record 1",
                                                     Nik = "Nik 4"
@@ -329,7 +329,7 @@ namespace HistoryQIPCollector_TestProject
                                                 },
                                                 new HistoryRecord
                                                 {
-                                                    Date = new DateTime(2001, 11, 12, 2, 15, 00),
+                                                    Date = new DateTime(2001, 11, 12, 2, 12, 00),
                                                     Direction = MessageDirection.Outgoing,
                                                     Message = "Folder 3 File 3 Record 2",
                                                     Nik = "Nik 2"
