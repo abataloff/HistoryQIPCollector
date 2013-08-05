@@ -37,7 +37,7 @@ namespace HistoryQIPCollector
                 {
                     OwnerIcqNumber = _ownerIcqNumber,
                     Files = (from _fileName in Directory.GetFiles(_historyFolder, "*" + HistoryFile.FILE_EXTENTION, SearchOption.TopDirectoryOnly)
-                             where !ignoredFiles.Contains(_fileName)
+                             where !ignoredFiles.Contains(Path.GetFileName(_fileName))
                              select HistoryFile.Read(_fileName)).ToDictionary(a_historyFile => a_historyFile.InterlocutorIcqNumber),
                 };
         }
