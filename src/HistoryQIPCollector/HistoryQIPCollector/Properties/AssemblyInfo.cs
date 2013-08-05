@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
 [assembly: AssemblyTitle("HistoryQIPCollector")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Utility for collect QIP history")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("abaSoft")]
 [assembly: AssemblyProduct("HistoryQIPCollector")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]

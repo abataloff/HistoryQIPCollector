@@ -1,4 +1,6 @@
-﻿namespace HistoryQIPCollector
+﻿using HistoryQIPCollector.Properties;
+
+namespace HistoryQIPCollector
 {
     partial class Main
     {
@@ -60,7 +62,7 @@
             // v_btnAddSourceDir
             // 
             this.v_btnAddSourceDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.v_btnAddSourceDir.Location = new System.Drawing.Point(536, 268);
+            this.v_btnAddSourceDir.Location = new System.Drawing.Point(539, 268);
             this.v_btnAddSourceDir.Name = "v_btnAddSourceDir";
             this.v_btnAddSourceDir.Size = new System.Drawing.Size(77, 21);
             this.v_btnAddSourceDir.TabIndex = 1;
@@ -105,7 +107,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.v_dgvSourceDirectories.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.v_dgvSourceDirectories.RowHeadersVisible = false;
-            this.v_dgvSourceDirectories.Size = new System.Drawing.Size(607, 243);
+            this.v_dgvSourceDirectories.Size = new System.Drawing.Size(610, 243);
             this.v_dgvSourceDirectories.TabIndex = 0;
             // 
             // groupBox2
@@ -124,7 +126,7 @@
             // v_btnChooseOutDirectory
             // 
             this.v_btnChooseOutDirectory.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.v_btnChooseOutDirectory.Location = new System.Drawing.Point(590, 16);
+            this.v_btnChooseOutDirectory.Location = new System.Drawing.Point(590, 17);
             this.v_btnChooseOutDirectory.Name = "v_btnChooseOutDirectory";
             this.v_btnChooseOutDirectory.Size = new System.Drawing.Size(23, 23);
             this.v_btnChooseOutDirectory.TabIndex = 1;
@@ -171,8 +173,13 @@
             this.Controls.Add(this.v_btnStart);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "Main";
-            this.Text = "Form1";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Сборщик пользовательской истори QIP";
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.v_dgvSourceDirectories)).EndInit();
             this.groupBox2.ResumeLayout(false);
